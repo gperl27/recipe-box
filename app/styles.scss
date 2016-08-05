@@ -1,0 +1,43 @@
+$grayborder: 1px solid #807F83;
+$green: #468966;
+$orange: #b64926;
+
+
+
+h1, h2 {
+	text-align: center;
+}
+
+img {
+	float: left;
+
+	height: 100px;
+	width: 100px;
+	border-radius: 50%;
+}
+
+table {
+	border-top: $grayborder;
+	margin-top: 5%;
+	padding: 25px;
+	width: 100%;
+	font-size: 200%;
+	th, td {
+		vertical-align: middle;
+		text-align: center;
+		padding: 10px 0 10px 25px;
+	},
+	tr {
+		border-bottom: $grayborder;
+	}
+}
+
+.clickable {
+	cursor: pointer;
+	transition: .3s;
+}
+
+
+.clickable:hover {
+	color: $green;
+}
