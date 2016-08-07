@@ -23,6 +23,7 @@ Visit your local host to see the app running
 - [x] Minify
 - [x] Put on Codepen
 - [ ] Change ingredient input to textarea for better UX
+- [ ] Close popups when editing/adding recipes
 
 
 #### Author
