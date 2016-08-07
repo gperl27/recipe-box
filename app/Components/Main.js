@@ -8,7 +8,7 @@ require('../styles.scss');
 var Main = React.createClass({
 	render : function() {
 		return (
-			<div className="container">
+			<div>
 				<h1>Recipe Box</h1>
 				<h2>By Greg Perlman</h2>
 				<RecipeBox recipes />

@@ -1,16 +1,17 @@
 var React = require('react');
+var update = require('immutability-helper');
 
 var DATA = [
-	{'id': "1", name: "Pie", ingredients: ["dough", "apples"]},
-	{'id': "2", name: "Salad", ingredients: ["lettuce", "dressing"]}
+	{'id': 0, name: "Pie", ingredients: ["dough", "apples"]},
+	{'id': 1, name: "Salad", ingredients: ["lettuce", "dressing"]}
 ];
 
 var RecipeBox = React.createClass({
 	getInitialState: function() {
 		return {
 			recipes: DATA,
-			id: 3,
-			active: false
+			active: false,
+			id: 1
 		}
 	},
 	add: function(recipe, ingredients) {
@@ -25,14 +26,13 @@ var RecipeBox = React.createClass({
 		this.setState({
 			recipes: recipe,
 			id: idIncrement
-
 		});
 	},
-	remove: function(recipe){
-		var remove = this.state.recipes.splice(recipe, 1);
+	remove: function(index){
+		index = this.state.recipes.indexOf(index);
 		this.setState({
-			recipes: this.state.recipes
-		});
+			recipes: update(this.state.recipes, {$splice: [[index, 1]]})
+		})
 	},
 	clickHandler: function(){
 		this.setState({
@@ -42,14 +42,13 @@ var RecipeBox = React.createClass({
 	handleClick: function(){
 		this.setState({
 			active: false
-		})
+		});
 	},
 	render: function() {
-		console.log(this.state.active);
 		return (
-			<div>
+			<div className="recipe-container">
 				<RecipeList recipes={this.state.recipes} remove={this.remove}/>
-				<button onClick={this.clickHandler}>
+				<button className="btn btn-success add" onClick={this.clickHandler}>
 					ADD
 				</button>
 				{ this.state.active ? <AddRecipe add={this.add} active={this.state.active} toggle={this.handleClick}/> : null }
@@ -98,13 +97,16 @@ var Recipe = React.createClass({
 			active: false
 		})
 	},
+	remove: function() {
+		this.props.remove(this.props.recipes);
+	},
 	render: function() {
 		return (
-			<div className="well">
+			<div className="well recipe">
 				<RecipeName name={this.state.name} />
+				<button className="x-button btn btn-danger" onClick={this.remove}>X</button>
 				<IngredientsList ingredients={this.state.ingredients}/>
-				<button onClick={this.props.remove}>Delete</button>
-				<button onClick={this.clickHandler}>Edit</button>
+				<button className="btn btn-info edit-button"  onClick={this.clickHandler}><span className="glyphicon glyphicon-pencil aria-hidden='true'"></span></button>
 				{ this.state.active ? <EditRecipe edit={this.edit} active={this.state.active} toggle={this.handleClick}/> : null }
 			</div>
 		)
@@ -122,7 +124,6 @@ var RecipeName = React.createClass({
 var IngredientsList = React.createClass({
 
 	render: function() {
-		console.log(typeof this.props.ingredients);
 		var list = this.props.ingredients.map(function(ingredient){
 			return (
 				<Ingredients ingredient={ingredient} key={ingredient}/>
@@ -173,25 +174,32 @@ var AddRecipe = React.createClass({
 	},
 	render: function() {
 		return (
-			<div>
-				{ this.state.active ? 
-					<form onSubmit={this.handleSubmit}>
-						<input
-							type="text"
-							name="value"
-							value={this.state.value}
-							onChange={this.handleChange}
-						/>
-						<input
-							type="text"
-							name="ingredient"
-							value={this.state.ingredient}
-							onChange={this.handleChange}
-						/>
-						<button>ADD RECIPE</button>
-						<button onClick={this.clickHandler}>EXIT</button>
-					</form>
-				: null }
+			<div className="popup-background">
+				<div className="popup">
+					{ this.state.active ? 
+						<form onSubmit={this.handleSubmit}>
+							<h4>Add a Recipe</h4>
+							<label>Name</label>
+							<input
+								className="form-control"
+								type="text"
+								name="value"
+								value={this.state.value}
+								onChange={this.handleChange}
+							/>
+							<label>Ingredients</label>
+							<input
+								className="form-control"
+								type="text"
+								name="ingredient"
+								value={this.state.ingredient}
+								onChange={this.handleChange}
+							/>
+							<button className="btn btn-primary">Add Recipe</button>
+							<button className="btn btn-warning" onClick={this.clickHandler}>Close</button>
+						</form>
+					: null }
+				</div>
 			</div>
 			
 		)
@@ -228,24 +236,29 @@ var EditRecipe = React.createClass({
 	},
 	render: function() {
 		return (
-			<div>
+			<div className="ingredient-popup">
 				{ this.state.active ?
 					<form onSubmit={this.handleSubmit}>
-
+						<h4>Edit this recipe</h4>
+						<label> Name </label>
 						<input
+							className="form-control"
 							type="text"
 							name="value"
 							value={this.state.value}
 							onChange={this.handleChange}
 						/>
+						<label> Ingredients </label>
 						<input
+							placeholder="Separate, by, commas"
+							className="form-control"
 							type="text"
 							name="ingredient"
 							value={this.state.ingredient}
 							onChange={this.handleChange}
 						/>
-						<button>EDIT</button>
-						<button onClick={this.clickHandler}>CANCEL</button>
+						<button className="ing-btn btn btn-primary">Save</button>
+						<button className="ing-btn btn btn-warning" onClick={this.clickHandler}>Cancel</button>
 					</form>
 				: null }
 			</div>

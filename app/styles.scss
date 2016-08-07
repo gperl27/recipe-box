@@ -1,43 +1,112 @@
-$grayborder: 1px solid #807F83;
-$green: #468966;
-$orange: #b64926;
+$white: #fff;
+$shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 
+html, body {
+	height: 100%;
+	width: 100%;
+}
 
+body {
+	background-image: url("https://static.pexels.com/photos/103313/pexels-photo-103313.jpeg");
+	font-size: 200%;
+}
 
 h1, h2 {
 	text-align: center;
+	color: #fff;
 }
 
-img {
-	float: left;
-
-	height: 100px;
-	width: 100px;
-	border-radius: 50%;
-}
-
-table {
-	border-top: $grayborder;
-	margin-top: 5%;
-	padding: 25px;
-	width: 100%;
-	font-size: 200%;
-	th, td {
-		vertical-align: middle;
-		text-align: center;
-		padding: 10px 0 10px 25px;
-	},
-	tr {
-		border-bottom: $grayborder;
+.recipe-container {
+	margin: auto;
+	width: 50%;
+	ul {
+		padding-left: 0;
+		padding: 15px;
 	}
 }
 
-.clickable {
-	cursor: pointer;
-	transition: .3s;
+.recipe {
+	margin: auto;
+	margin-bottom: 25px;
+	position: relative;
+	max-width: 500px;
+	background-color: $white;
+	box-shadow: $shadow;
+	.x-button {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+	.edit-button {
+		display: block;
+		margin: auto;
+	}
+	h3 {
+		text-align: center;
+	}
+	ul {
+		display: table;
+		margin: 0 auto;
+		padding-bottom: 25px;
+	}
 }
 
-
-.clickable:hover {
-	color: $green;
+.ing-btn {
+	margin: 5px;
 }
+
+.recipe:before, .recipe:after
+{
+	content:"";
+    position:absolute; 
+    z-index:-1;
+    box-shadow:0 0 20px rgba(0,0,0,0.8);
+    top:10px;
+    bottom:10px;
+    left:0;
+    right:0;
+    border-radius:100px / 10px;
+}
+
+.recipe:after
+{
+    right:10px; 
+    left:auto; 
+    transform:skew(8deg) rotate(3deg);
+}
+
+.add {
+	display: block;
+	margin: auto;
+	font-size: 32px;
+}
+
+.popup-background {
+	top: 0;
+	left: 0;
+	z-index: 999;
+	overflow: auto;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.6);
+}
+
+.popup {
+	text-align: center;
+	border-radius: 10px;
+	background-color: $white;
+	position: relative;
+	margin: 0 auto;
+	max-width: 650px;
+	top: 25vh;
+	padding: 25px;
+	button {
+		margin: 25px 5px 0 5px;
+	}
+}
+
+input {
+	margin-bottom: 10px;
+}
+
